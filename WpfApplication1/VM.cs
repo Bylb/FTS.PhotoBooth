@@ -46,8 +46,6 @@ namespace FTS.PhotoBooth
             }
         }
 
-   
-        private BitmapSource imgSource;
         public BitmapSource ImgSource
         {
 
@@ -64,8 +62,6 @@ namespace FTS.PhotoBooth
                     }
                 return null;
             }
-
-
          }
 
 
@@ -89,7 +85,7 @@ namespace FTS.PhotoBooth
 
         public void OnImageCaptured(Touchless.Vision.Contracts.IFrameSource frameSource, Touchless.Vision.Contracts.Frame frame, double fps)
         {
-            _latestFrame = (Bitmap)frame.Image.Clone();
+            _latestFrame = (Bitmap)frame.Image;
             
             if (_latestFrame != null)
             {             
