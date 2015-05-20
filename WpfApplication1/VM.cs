@@ -66,6 +66,18 @@ namespace FTS.PhotoBooth
 
 
 
+        private int timer;
+
+        public String DisplayTimer
+        {
+            get
+            {
+                if (timer > 0) return timer.ToString();
+                return "";
+            }
+
+        }
+
 
         public VM()
         {
