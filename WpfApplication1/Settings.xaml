@@ -1,0 +1,16 @@
+﻿<Window x:Class="FTS.PhotoBooth.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings" Height="143" Width="393">
+    <Grid>
+        <Label Content="Camera to use :" Height="25"  Width="91" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" />
+
+        <ComboBox Name="comboBoxCameras"  ItemsSource="{Binding Cameras}" SelectedItem="{Binding Path=SelectedCamera, Mode=TwoWay}" 
+                  Height="25"  Width="254" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="121,5,0,0" >
+        </ComboBox>
+        <Label Content="Destination Folder :" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,45,0,0"   />
+        <TextBox Name="FoldertoSave" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" Margin="123,45,10,43"  />
+
+
+    </Grid>
+</Window>

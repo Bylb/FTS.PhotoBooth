@@ -33,7 +33,6 @@ namespace FTS.PhotoBooth
                 var v = (VM)this.DataContext; 
                 if (v.CmdCapture.CanExecute(null))
                     v.CmdCapture.Execute(null); 
-
             }
         }
 

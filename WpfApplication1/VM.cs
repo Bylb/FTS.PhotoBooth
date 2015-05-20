@@ -218,6 +218,26 @@ namespace FTS.PhotoBooth
         #endregion
 
 
+        #region settings
+
+        private RelayCommand openSettings;
+        public RelayCommand OpenSettings
+        {
+            get
+            {
+                return openSettings ?? (
+                    openSettings = new RelayCommand(() =>
+                    {
+                        Settings st = new Settings(this);
+                        st.ShowDialog();
+                    }
+                     )
+                    );
+
+            }
+        }
+        #endregion
+
 
         #region notification
 

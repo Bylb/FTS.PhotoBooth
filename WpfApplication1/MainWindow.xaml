@@ -17,12 +17,12 @@
     <Grid  >
 
 
-        <Grid Margin="5,5,130,46" >
+        <Grid Margin="5,5,130,5" >
             <Image Name="imageCamera" Source="{Binding Path=ImgCaptured}"     />
             <Label Content="{Binding Path=DisplayTimer}"  FontSize="400" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
 
-        <ListView Name="Thumbnails"  HorizontalAlignment="Right" Width="125" Margin="0,5,0,68" ItemsSource="{Binding Path=Images}" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+        <ListView Name="Thumbnails"  HorizontalAlignment="Right" Width="125" Margin="0,5,0,58" ItemsSource="{Binding Path=Images}" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Image Source="{Binding}"  Width="110" Margin="1"/>
@@ -31,12 +31,9 @@
         </ListView>
 
         <Button Content="Capture" Command="{Binding Path=CmdCapture}"
-                    Width="110" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-        <ComboBox Name="comboBoxCameras"  ItemsSource="{Binding Cameras}" SelectedItem="{Binding Path=SelectedCamera, Mode=TwoWay}"
-                  Width="110" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,29">
-        </ComboBox>
-
-        <TextBox Name="FoldertoSave" Width="584" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,673,2" />
+                    Width="110" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,2,4"/>
+        <Button Content="Settings" Command="{Binding Path=OpenSettings}"
+        	Width="60" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,27,31"/>
 
 
 
