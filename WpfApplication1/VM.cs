@@ -12,6 +12,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight.Command;
 using Touchless.Vision.Camera;
 
@@ -22,6 +23,9 @@ namespace FTS.PhotoBooth
 
         public VM()
         {
+
+            currentDispatch = Application.Current.Dispatcher; 
+            
             //setting timer
 
             captureTimer = new Timer();
@@ -30,8 +34,10 @@ namespace FTS.PhotoBooth
             captureTimer.Elapsed += captureTimer_Elapsed;
 
 
-            FolderTo = "D:\\"; 
+            FolderTo = "c:\\";
 
+            Images = new ObservableCollection<string>();
+            PopulateImages(); 
             
             Cameras = new List<Camera>();
             foreach (Camera cam in CameraService.AvailableCameras)
@@ -40,11 +46,13 @@ namespace FTS.PhotoBooth
             }
 
             if (Cameras.Count > 0)
-                SelectedCamera = Cameras.FirstOrDefault(); 
+                SelectedCamera = Cameras.FirstOrDefault();
 
+
+         
         }
 
-      
+        Dispatcher currentDispatch; 
 
 
         #region Camera 
@@ -117,6 +125,25 @@ namespace FTS.PhotoBooth
 
         #endregion
 
+        #region List of Tumbnails
+
+
+        public ObservableCollection<string> Images { get; set; }
+
+        private void PopulateImages()
+        {
+            currentDispatch.BeginInvoke(  DispatcherPriority.Background,  new Action(() =>  Images.Clear()));
+           
+            DirectoryInfo folder = new DirectoryInfo(FolderTo);
+           var images = folder.GetFiles("*.png").OrderByDescending(fi => fi.LastWriteTime);
+            foreach (FileInfo img in images)
+            {
+                currentDispatch.BeginInvoke(DispatcherPriority.Background, new Action(() => Images.Add(img.FullName))); 
+            }
+
+        }
+
+        #endregion
 
 
 
@@ -155,8 +182,11 @@ namespace FTS.PhotoBooth
                 using (MemoryStream ms = new MemoryStream(ImgCaptured) )
                 {
                     Image dest = Image.FromStream(ms);
-                    var destFile  = FolderTo + '\\' + "test.png"; 
-                    dest.Save(destFile, ImageFormat.Png ); 
+                    var destFile  = FolderTo + '\\' + "Photo"+DateTime.Now.ToString("yyyyMMddHHmmss") +".png"; 
+                    dest.Save(destFile, ImageFormat.Png);
+                    
+                    PopulateImages();
+                    currentDispatch.BeginInvoke(DispatcherPriority.Background, new Action(() =>  CmdCapture.RaiseCanExecuteChanged())); 
 
                 }
             }
@@ -172,8 +202,10 @@ namespace FTS.PhotoBooth
                 return cmdCapture ?? (
                     cmdCapture = new RelayCommand(() => {
                         timer = 4;
-                        captureTimer.Start();                     
-                            }
+                        captureTimer.Start();
+                        CmdCapture.RaiseCanExecuteChanged(); 
+                            },
+                             () => !captureTimer.Enabled
                      )
                     ); 
 

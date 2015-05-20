@@ -26,6 +26,17 @@ namespace FTS.PhotoBooth
             InitializeComponent();
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                var v = (VM)this.DataContext; 
+                if (v.CmdCapture.CanExecute(null))
+                    v.CmdCapture.Execute(null); 
+
+            }
+        }
+
 
     }
 }

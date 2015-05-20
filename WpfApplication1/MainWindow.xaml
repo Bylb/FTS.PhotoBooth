@@ -2,31 +2,43 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ViewModel="clr-namespace:FTS.PhotoBooth"
-        Title="MainWindow" Height="800" Width="1290"
-      >
+        Title="PhotoBooth By FTS" Height="768" Width="1300"
+        KeyDown="Window_KeyDown"
+        >
+    <Window.DataContext>
+        <ViewModel:VM/>
+    </Window.DataContext>
 
+    <Window.InputBindings>
+        <KeyBinding Key="X" 
+                    Modifiers="Control" 
+                    Command="{Binding Path=CmdCapture}"/>
+    </Window.InputBindings>
     <Grid  >
-        <Grid.DataContext>
-            <ViewModel:VM/>
-        </Grid.DataContext>
-        
-        <Image Name="imageCamera" Margin="5,5,5,40"  
-               Source="{Binding Path=ImgCaptured}"
-               />
-        <Label Content="{Binding Path=DisplayTimer}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="500" Background="#00000000" Foreground="Red" />
-        <StackPanel VerticalAlignment="Bottom" Height="28" Orientation="Horizontal" Margin="5">
-            <Button Content="Capture" Command="{Binding Path=CmdCapture}"
-                    Width="150" Margin="10,0,10,0"/>
-                     
-            <ComboBox Name="comboBoxCameras"  ItemsSource="{Binding Cameras}" SelectedItem="{Binding Path=SelectedCamera, Mode=TwoWay}"
-                  Width="200" Height="25" Margin="10,0,10,0"
-                 
-                 >
+
+
+        <Grid Margin="5,5,130,46" >
+            <Image Name="imageCamera" Source="{Binding Path=ImgCaptured}"     />
+            <Label Content="{Binding Path=DisplayTimer}"  FontSize="400" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+
+        <ListView Name="Thumbnails"  HorizontalAlignment="Right" Width="125" Margin="0,5,0,68" ItemsSource="{Binding Path=Images}" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}"  Width="110" Margin="1"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Content="Capture" Command="{Binding Path=CmdCapture}"
+                    Width="110" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <ComboBox Name="comboBoxCameras"  ItemsSource="{Binding Cameras}" SelectedItem="{Binding Path=SelectedCamera, Mode=TwoWay}"
+                  Width="110" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,29">
         </ComboBox>
 
-            <TextBox Name="FoldertoSave" Width="500" Text="{Binding Path=FolderTo, Mode=TwoWay}" />
+        <TextBox Name="FoldertoSave" Width="584" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,673,2" />
 
-        </StackPanel>
+
 
 
 
