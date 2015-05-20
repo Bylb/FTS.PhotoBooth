@@ -10,7 +10,7 @@
             <ViewModel:VM/>
         </Grid.DataContext>
         
-        <Image Name="imageCamera" HorizontalAlignment="Left" Width="1280" Height="720" Margin="5,5,5,0" VerticalAlignment="Top" 
+        <Image Name="imageCamera" Margin="5,5,5,40"  
                Source="{Binding Path=ImgCaptured}"
                />
         <Label Content="{Binding Path=DisplayTimer}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="500" Background="#00000000" Foreground="Red" />
@@ -23,6 +23,8 @@
                  
                  >
         </ComboBox>
+
+            <TextBox Name="FoldertoSave" Width="500" Text="{Binding Path=FolderTo, Mode=TwoWay}" />
 
         </StackPanel>
 

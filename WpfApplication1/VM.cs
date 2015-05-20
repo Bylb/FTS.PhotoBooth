@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -27,7 +28,10 @@ namespace FTS.PhotoBooth
             captureTimer.Interval = 1000;
             captureTimer.Stop(); 
             captureTimer.Elapsed += captureTimer_Elapsed;
-            
+
+
+            FolderTo = "D:\\"; 
+
             
             Cameras = new List<Camera>();
             foreach (Camera cam in CameraService.AvailableCameras)
@@ -118,6 +122,16 @@ namespace FTS.PhotoBooth
 
         #region image capture and Timer
 
+
+        private string folderTo;
+        public string FolderTo
+        {
+            get { return folderTo; }
+            set { folderTo = value; NotifyPropertyChanged("FolderTo"); }
+        } 
+
+
+
         private int timer;
         public String DisplayTimer
         {
@@ -131,8 +145,6 @@ namespace FTS.PhotoBooth
 
 
         private Timer captureTimer;
-
-
         private void captureTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timer--;
@@ -140,6 +152,13 @@ namespace FTS.PhotoBooth
             if (timer <= 0)
             {
                 captureTimer.Stop(); 
+                using (MemoryStream ms = new MemoryStream(ImgCaptured) )
+                {
+                    Image dest = Image.FromStream(ms);
+                    var destFile  = FolderTo + '\\' + "test.png"; 
+                    dest.Save(destFile, ImageFormat.Png ); 
+
+                }
             }
         }
 
