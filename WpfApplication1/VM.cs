@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using GalaSoft.MvvmLight.Command;
 using Touchless.Vision.Camera;
 
 namespace FTS.PhotoBooth
@@ -17,9 +19,36 @@ namespace FTS.PhotoBooth
     public class VM : INotifyPropertyChanged
     {
 
+        public VM()
+        {
+            //setting timer
+
+            captureTimer = new Timer();
+            captureTimer.Interval = 1000;
+            captureTimer.Stop(); 
+            captureTimer.Elapsed += captureTimer_Elapsed;
+            
+            
+            Cameras = new List<Camera>();
+            foreach (Camera cam in CameraService.AvailableCameras)
+            {
+                Cameras.Add(cam);
+            }
+
+            if (Cameras.Count > 0)
+                SelectedCamera = Cameras.FirstOrDefault(); 
+
+        }
+
+      
+
+
+        #region Camera 
+
+        
         private CameraFrameSource _frameSource;
 
-        public List<Camera> Cameras {get; set;}
+        public List<Camera> Cameras { get; set; }
 
         private Camera selectedCamera;
         public Camera SelectedCamera
@@ -35,7 +64,7 @@ namespace FTS.PhotoBooth
                     _frameSource.NewFrame -= OnImageCaptured;
                     _frameSource.Camera.Dispose();
                     setFrameSource(null);
-                }               
+                }
                 setFrameSource(new CameraFrameSource(selectedCamera));
                 _frameSource.Camera.CaptureWidth = 1280;
                 _frameSource.Camera.CaptureHeight = 720;
@@ -46,95 +75,6 @@ namespace FTS.PhotoBooth
             }
         }
 
-        public BitmapSource ImgSource
-        {
-
-            get
-            {
-                if (_latestFrame != null)
-                    try
-                    {
-                        return VM.loadBitmap(_latestFrame);
-                    }
-                    catch (Exception ex)
-                    {
-                        return null;
-                    }
-                return null;
-            }
-         }
-
-
-
-        private int timer;
-
-        public String DisplayTimer
-        {
-            get
-            {
-                if (timer > 0) return timer.ToString();
-                return "";
-            }
-
-        }
-
-
-        public VM()
-        {
-            Cameras = new List<Camera>();
-            foreach (Camera cam in CameraService.AvailableCameras)
-            {
-                Cameras.Add(cam);
-            }
-
-            if (Cameras.Count > 0)
-                SelectedCamera = Cameras.FirstOrDefault(); 
-
-        }
-
-        private Bitmap _latestFrame;
-     
-
-        public void OnImageCaptured(Touchless.Vision.Contracts.IFrameSource frameSource, Touchless.Vision.Contracts.Frame frame, double fps)
-        {
-            _latestFrame = (Bitmap)frame.Image;
-            
-            if (_latestFrame != null)
-            {             
-                NotifyPropertyChanged("ImgSource");              
-            }
-          
-            
-        
-        }
-
-
-        #region  bitmap to bitmapsource
-
-        [DllImport("gdi32")]
-        static extern int DeleteObject(IntPtr o);
-
-        public static BitmapSource loadBitmap(System.Drawing.Bitmap source)
-        {
-            IntPtr ip = source.GetHbitmap();
-            BitmapSource bs = null;
-            try
-            {
-                bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(ip,
-                   IntPtr.Zero, Int32Rect.Empty,
-                   System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
-            }
-            finally
-            {
-                DeleteObject(ip);
-            }
-
-            return bs;
-        }
-
-
-
-        #endregion
 
 
 
@@ -146,6 +86,86 @@ namespace FTS.PhotoBooth
         }
 
    
+
+      
+
+
+
+        #endregion 
+
+        #region image source
+
+        private Byte[] latestFrameB;
+
+        public Byte[] ImgCaptured
+        {
+            get { return latestFrameB; }
+            private set { latestFrameB = value; NotifyPropertyChanged("ImgCaptured"); }
+        } 
+
+        public void OnImageCaptured(Touchless.Vision.Contracts.IFrameSource frameSource, Touchless.Vision.Contracts.Frame frame, double fps)
+        {
+            ImgCaptured = frame.ImageData; 
+        
+        }
+
+    
+
+        #endregion
+
+
+
+
+        #region image capture and Timer
+
+        private int timer;
+        public String DisplayTimer
+        {
+            get
+            {
+                if (timer > 0) return timer.ToString();
+                return "";
+            }
+        }
+
+
+
+        private Timer captureTimer;
+
+
+        private void captureTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            timer--;
+            NotifyPropertyChanged("DisplayTimer");
+            if (timer <= 0)
+            {
+                captureTimer.Stop(); 
+            }
+        }
+
+
+
+        private RelayCommand cmdCapture;
+        public RelayCommand CmdCapture
+        {
+            get
+            {
+                return cmdCapture ?? (
+                    cmdCapture = new RelayCommand(() => {
+                        timer = 4;
+                        captureTimer.Start();                     
+                            }
+                     )
+                    ); 
+
+            }
+        }
+
+        
+
+
+        #endregion
+
 
 
         #region notification
