@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-
 namespace FTS.PhotoBooth
 {
     /// <summary>
@@ -19,11 +18,10 @@ namespace FTS.PhotoBooth
     /// </summary>
     public partial class Settings : Window
     {
-        public Settings(VM dc )
+        public Settings()
         {
             InitializeComponent();
-
-            this.DataContext = dc; 
+          
         }
     }
 }

@@ -4,8 +4,9 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using FTS.PhotoBooth.ViewModel; 
 
-namespace WpfApplication1
+namespace FTS.PhotoBooth
 {
     /// <summary>
     /// Interaction logic for App.xaml

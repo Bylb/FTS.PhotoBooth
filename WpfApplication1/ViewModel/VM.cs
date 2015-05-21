@@ -13,41 +13,50 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Touchless.Vision.Camera;
 
-namespace FTS.PhotoBooth
+namespace FTS.PhotoBooth.ViewModel
 {
-    public class VM : INotifyPropertyChanged
+    public class VM : ViewModelBase
     {
 
         public VM()
         {
 
-            currentDispatch = Application.Current.Dispatcher; 
-            
-            //setting timer
-
-            captureTimer = new Timer();
-            captureTimer.Interval = 1000;
-            captureTimer.Stop(); 
-            captureTimer.Elapsed += captureTimer_Elapsed;
-
-            TimerValue = 4; 
-            FolderTo = "c:\\";
-
-            Images = new ObservableCollection<string>();
-            PopulateImages(); 
-            
-            Cameras = new List<Camera>();
-            foreach (Camera cam in CameraService.AvailableCameras)
+            if (IsInDesignMode)
             {
-                Cameras.Add(cam);
+                // Code runs in Blend --> create design time data.
+            }
+            else
+            {
+                // Code runs "for real"
+                currentDispatch = Application.Current.Dispatcher;
+                
+                //setting timer
+                captureTimer = new Timer();
+                captureTimer.Interval = 1000;
+                captureTimer.Stop();
+                captureTimer.Elapsed += captureTimer_Elapsed;
+
+                TimerValue = 4;
+                FolderTo = "c:\\";
+
+                Images = new ObservableCollection<string>();
+                PopulateImages();
+
+                Cameras = new List<Camera>();
+                foreach (Camera cam in CameraService.AvailableCameras)
+                {
+                    Cameras.Add(cam);
+                }
+                if (Cameras.Count > 0)
+                    SelectedCamera = Cameras.FirstOrDefault();
+
             }
 
-            if (Cameras.Count > 0)
-                SelectedCamera = Cameras.FirstOrDefault();
-
+           
 
          
         }
@@ -83,7 +92,8 @@ namespace FTS.PhotoBooth
                 _frameSource.Camera.Fps = 50;
                 _frameSource.NewFrame += OnImageCaptured;
                 _frameSource.StartFrameCapture();
-                NotifyPropertyChanged("SelectedCamera");
+                RaisePropertyChanged(() => SelectedCamera);
+                
             }
         }
 
@@ -112,7 +122,7 @@ namespace FTS.PhotoBooth
         public Byte[] ImgCaptured
         {
             get { return latestFrameB; }
-            private set { latestFrameB = value; NotifyPropertyChanged("ImgCaptured"); }
+            private set { latestFrameB = value; RaisePropertyChanged(() => ImgCaptured);  }
         } 
 
         public void OnImageCaptured(Touchless.Vision.Contracts.IFrameSource frameSource, Touchless.Vision.Contracts.Frame frame, double fps)
@@ -154,7 +164,7 @@ namespace FTS.PhotoBooth
         public string FolderTo
         {
             get { return folderTo; }
-            set { folderTo = value; NotifyPropertyChanged("FolderTo"); }
+            set { folderTo = value; RaisePropertyChanged(() => FolderTo); }
         } 
 
 
@@ -175,7 +185,7 @@ namespace FTS.PhotoBooth
         private void captureTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timer--;
-            NotifyPropertyChanged("DisplayTimer");
+            RaisePropertyChanged(() => DisplayTimer);
             if (timer <= 0)
             {
                 captureTimer.Stop(); 
@@ -202,7 +212,7 @@ namespace FTS.PhotoBooth
                 return cmdCapture ?? (
                     cmdCapture = new RelayCommand(() => {
                         timer = TimerValue;
-                        NotifyPropertyChanged("DisplayTimer");
+                        RaisePropertyChanged(() => DisplayTimer);
                         captureTimer.Start();
                         CmdCapture.RaiseCanExecuteChanged(); 
                             },
@@ -232,7 +242,7 @@ namespace FTS.PhotoBooth
                 return openSettings ?? (
                     openSettings = new RelayCommand(() =>
                     {
-                        Settings st = new Settings(this);
+                        FTS.PhotoBooth.Settings st = new FTS.PhotoBooth.Settings();
                         st.ShowDialog();
                     }
                      )
@@ -240,21 +250,6 @@ namespace FTS.PhotoBooth
 
             }
         }
-        #endregion
-
-
-        #region notification
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
-
         #endregion
 
     }

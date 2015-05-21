@@ -5,16 +5,8 @@
         Title="PhotoBooth By FTS" Height="768" Width="1300"
         KeyDown="Window_KeyDown" Icon="Images/camera.ico"
         >
-    <Window.DataContext>
-        <ViewModel:VM/>
-    </Window.DataContext>
 
-    <Window.InputBindings>
-        <KeyBinding Key="X" 
-                    Modifiers="Control" 
-                    Command="{Binding Path=CmdCapture}"/>
-    </Window.InputBindings>
-    <Grid  >
+    <Grid x:Name="MainGrid"  DataContext="{Binding Main, Source={StaticResource Locator}}" >
 
 
         <Grid Margin="5,5,130,5" >
