@@ -33,7 +33,7 @@ namespace FTS.PhotoBooth
             captureTimer.Stop(); 
             captureTimer.Elapsed += captureTimer_Elapsed;
 
-
+            TimerValue = 4; 
             FolderTo = "c:\\";
 
             Images = new ObservableCollection<string>();
@@ -201,7 +201,8 @@ namespace FTS.PhotoBooth
             {
                 return cmdCapture ?? (
                     cmdCapture = new RelayCommand(() => {
-                        timer = 4;
+                        timer = TimerValue;
+                        NotifyPropertyChanged("DisplayTimer");
                         captureTimer.Start();
                         CmdCapture.RaiseCanExecuteChanged(); 
                             },
@@ -219,6 +220,9 @@ namespace FTS.PhotoBooth
 
 
         #region settings
+
+
+        public int TimerValue {get; set;}
 
         private RelayCommand openSettings;
         public RelayCommand OpenSettings
