@@ -1,0 +1,26 @@
+﻿<Window x:Class="FTS.PhotoBooth.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:video="clr-namespace:FTS.PhotoBooth.Video"
+        Title="PhotoBooth by FTS" Height="350" Width="525">
+
+    <Window.DataContext>
+        <Binding Source="{StaticResource Locator}"
+                 Path="Main" />
+    </Window.DataContext>
+    <Grid>
+        <Viewbox  Margin="2,2,120,40" Stretch="Uniform">
+            <video:WebcamDevice  VerticalAlignment="Top" HorizontalAlignment="Center"
+                                x:Name="CameraVideoDeviceControl"
+                                VideoPreviewWidth="1280"
+                                VideoPreviewHeight="960"
+                                VideoSourceId="{Binding SelectedVideoDevice, Converter={StaticResource MediaInformationConverter}}"
+                                SnapshotBitmap="{Binding SnapshotBitmap, Mode=TwoWay}"
+                             InitialTimeBeforeCapture="5"
+                             TimeBeforeCapture="{Binding Path=TimeBeforeSnapshot, Mode=TwoWay}"/>
+        </Viewbox>
+        <Button   Command="{Binding TakeSnapshot, ElementName=CameraVideoDeviceControl}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="22" Content="Capture" Width="68" Margin="5,0,0,5" />
+        <Label Content="{Binding Path=TimeBeforeSnapshot}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="40" Width="30" 
+               Foreground="Red" FontWeight="Bold" FontSize="30" Margin="244,0,243,0" Padding="0"></Label>
+    </Grid>
+</Window>
