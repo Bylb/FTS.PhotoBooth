@@ -102,6 +102,7 @@
     <Compile Include="ViewModel\ExitMsg.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MediaInformation.cs" />
+    <Compile Include="ViewModel\SnapshotMsg.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

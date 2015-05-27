@@ -53,6 +53,11 @@ namespace FTS.PhotoBooth.ViewModel
                        (action) => ExitMsgReceived(action)
                   );
 
+                Messenger.Default.Register<SnapshotMsg>
+                (
+                  this,
+                      (action) => SnapshotMsgReceived(action)
+                 );
 
                 SetBorderColor(Colors.Black); 
 
@@ -76,7 +81,23 @@ namespace FTS.PhotoBooth.ViewModel
         }
 
         Dispatcher currentDispatch;
-      
+
+
+        private object ExitMsgReceived(ExitMsg e)
+        {
+            this.ReleaseVideoDevice();
+            return null;
+        }
+
+
+
+        private object SnapshotMsgReceived(SnapshotMsg e)
+        {
+            if (this.CmdCapture.CanExecute(null))
+                this.CmdCapture.Execute(null); 
+            return null;
+        }
+
 
         #region Camera
         public List<MediaInformation> Cameras
@@ -137,12 +158,6 @@ namespace FTS.PhotoBooth.ViewModel
             this.videoCaptureDevice = null;
         }
 
-
-        private object ExitMsgReceived(ExitMsg e)
-        {
-            this.ReleaseVideoDevice();
-            return null; 
-        }
 
 
 

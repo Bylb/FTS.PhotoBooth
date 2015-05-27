@@ -35,5 +35,13 @@ namespace FTS.PhotoBooth
             var msg = new ViewModel.ExitMsg();
             Messenger.Default.Send<ViewModel.ExitMsg>(msg);
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.Key == Key.Space)
+                Messenger.Default.Send<ViewModel.SnapshotMsg>(new ViewModel.SnapshotMsg());
+
+        }
     }
 }
