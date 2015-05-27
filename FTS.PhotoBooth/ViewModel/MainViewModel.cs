@@ -5,8 +5,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Timers;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using AForge.Video.DirectShow;
 using GalaSoft.MvvmLight;
@@ -37,6 +39,7 @@ namespace FTS.PhotoBooth.ViewModel
             if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
+                SetBorderColor(Colors.Red); 
             }
             else
             {
@@ -51,8 +54,10 @@ namespace FTS.PhotoBooth.ViewModel
                   );
 
 
+                SetBorderColor(Colors.Black); 
+
                 //setting timer
-                captureTimer = new Timer();
+                captureTimer = new System.Timers.Timer();
                 captureTimer.Interval = 1000;
                 captureTimer.Stop();
                 captureTimer.Elapsed += captureTimer_Elapsed;
@@ -199,6 +204,8 @@ namespace FTS.PhotoBooth.ViewModel
 
 
         private int timer;
+
+        #region Display Timer
         public String DisplayTimer
         {
             get
@@ -208,9 +215,25 @@ namespace FTS.PhotoBooth.ViewModel
             }
         }
 
+        private SolidColorBrush borderColor; 
+        public SolidColorBrush BorderColor
+        {
+
+            get { return borderColor; }
+            set { borderColor = value;  RaisePropertyChanged(() => BorderColor); }
+        }
+
+        private void SetBorderColor(System.Windows.Media.Color c)
+        {
+            currentDispatch.BeginInvoke(DispatcherPriority.Render, new Action(() => BorderColor = new SolidColorBrush(c)));
+        }
+
+        #endregion
 
 
-        private Timer captureTimer;
+
+
+        private System.Timers.Timer captureTimer;
         private void captureTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timer--;
@@ -219,9 +242,12 @@ namespace FTS.PhotoBooth.ViewModel
             {
                 captureTimer.Stop();
                 var destFile = FolderTo + '\\' + "Photo" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+                SetBorderColor(Colors.Green); 
+                Thread.Sleep(1000); 
                 currentSnapshot.Save(destFile, ImageFormat.Png);
                 PopulateImages();
-                currentDispatch.BeginInvoke(DispatcherPriority.Background, new Action(() => CmdCapture.RaiseCanExecuteChanged()));
+                SetBorderColor(Colors.Black); 
+                currentDispatch.BeginInvoke(DispatcherPriority.Render, new Action(() => CmdCapture.RaiseCanExecuteChanged()));
             }
         }
 
@@ -237,6 +263,8 @@ namespace FTS.PhotoBooth.ViewModel
                     return cmdCapture ?? (
                         cmdCapture = new RelayCommand(() =>
                                 {
+                                   SetBorderColor(Colors.Red);
+
                                     timer = InitTimer;
                                     RaisePropertyChanged(() => DisplayTimer);
                                     captureTimer.Start();

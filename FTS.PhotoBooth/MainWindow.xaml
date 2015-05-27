@@ -6,12 +6,12 @@
     <Grid x:Name="MainGrid"  
           DataContext="{Binding Main, Source={StaticResource Locator}}" >
 
-
-        <Grid Margin="5,5,210,5"  >
+        <Border BorderThickness="4" BorderBrush="{Binding Path=BorderColor}" Margin="5,5,210,5" >
+        <Grid Margin="0" >
             <Image Name="imageCamera" Source="{Binding Path=ImageDatas}"     />
             <Label Content="{Binding Path=DisplayTimer}"  FontSize="400" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" />
         </Grid>
-
+        </Border>
         <ListView Name="Thumbnails"  HorizontalAlignment="Right" Width="200" Margin="0,5,0,43" ItemsSource="{Binding Path=Images}" ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                   BorderThickness="1" BorderBrush="Black"
                   >
