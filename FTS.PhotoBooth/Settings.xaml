@@ -11,7 +11,9 @@
         </ComboBox>
 
         <Label Content="Destination Folder :" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,45,0,0"   />
-        <TextBox Name="FoldertoSave" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" Margin="123,45,10,43"  />
+        <TextBox Name="FoldertoSave" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" Margin="123,47,10,41"  />
+        <TextBox x:Name="FoldertoSave_Copy" Text="{Binding InitTimer, Mode=TwoWay}" Height="25" Margin="122,77,11,11"  />
+        <Label Content="Timer Start" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,75,0,0"   />
 
 
     </Grid>

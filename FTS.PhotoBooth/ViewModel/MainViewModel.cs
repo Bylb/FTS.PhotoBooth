@@ -57,8 +57,7 @@ namespace FTS.PhotoBooth.ViewModel
                 captureTimer.Stop();
                 captureTimer.Elapsed += captureTimer_Elapsed;
 
-                TimerValue = 4;              
-
+              
                 Images = new ObservableCollection<string>();
                 PopulateImages();
                             
@@ -72,7 +71,7 @@ namespace FTS.PhotoBooth.ViewModel
         }
 
         Dispatcher currentDispatch;
-
+      
 
         #region Camera
         public List<MediaInformation> Cameras
@@ -126,10 +125,10 @@ namespace FTS.PhotoBooth.ViewModel
             {
                 return;
             }
+            this.videoCaptureDevice.NewFrame -= videoCaptureDevice_NewFrame; 
             this.videoCaptureDevice.SignalToStop();
             this.videoCaptureDevice.WaitForStop();
-            this.videoCaptureDevice.Stop();
-            this.videoCaptureDevice.NewFrame -= videoCaptureDevice_NewFrame; 
+            this.videoCaptureDevice.Stop();        
             this.videoCaptureDevice = null;
         }
 
@@ -190,33 +189,13 @@ namespace FTS.PhotoBooth.ViewModel
                 {
                     using (var memoryStream = new MemoryStream())
                     {
-                        currentImage.Save(memoryStream, ImageFormat.Png);
-                        memoryStream.Flush();
+                        currentImage.Save(memoryStream, ImageFormat.Bmp);
                         data = memoryStream.ToArray();
                     }
                 }
                 return data;
             }
         }
-
-
-
-       // private string folderTo;
-        public string FolderTo
-        {
-            get {
-                
-                        return Properties.Settings.Default.FolderToSave;                 
-                 }
-            set
-            {
-                Properties.Settings.Default.FolderToSave = value;
-                Properties.Settings.Default.Save();
-                PopulateImages();
-                RaisePropertyChanged(() => FolderTo);
-            }
-        }
-
 
 
         private int timer;
@@ -258,7 +237,7 @@ namespace FTS.PhotoBooth.ViewModel
                     return cmdCapture ?? (
                         cmdCapture = new RelayCommand(() =>
                                 {
-                                    timer = TimerValue;
+                                    timer = InitTimer;
                                     RaisePropertyChanged(() => DisplayTimer);
                                     captureTimer.Start();
                                     CmdCapture.RaiseCanExecuteChanged();
@@ -278,9 +257,41 @@ namespace FTS.PhotoBooth.ViewModel
 
         #region settings
 
+        #region Settings
 
-        public int TimerValue { get; set; }
+        // private string folderTo;
+        public string FolderTo
+        {
+            get
+            {
 
+                return Properties.Settings.Default.FolderToSave;
+            }
+            set
+            {
+                Properties.Settings.Default.FolderToSave = value;
+                Properties.Settings.Default.Save();
+                PopulateImages();
+                RaisePropertyChanged(() => FolderTo);
+            }
+        }
+
+
+        public int InitTimer
+        {
+
+            get { return Properties.Settings.Default.InitTimer; }
+
+            set
+            {
+                Properties.Settings.Default.InitTimer = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged(() => InitTimer);
+            }
+
+        }
+
+        #endregion
         private RelayCommand openSettings;
         public RelayCommand OpenSettings
         {

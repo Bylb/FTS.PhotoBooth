@@ -34,5 +34,17 @@ namespace FTS.PhotoBooth.Properties {
                 this["FolderToSave"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int InitTimer {
+            get {
+                return ((int)(this["InitTimer"]));
+            }
+            set {
+                this["InitTimer"] = value;
+            }
+        }
     }
 }
