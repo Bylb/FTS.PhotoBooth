@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -59,14 +60,15 @@ namespace FTS.PhotoBooth.ViewModel
                       (action) => SnapshotMsgReceived(action)
                  );
 
-                SetBorderColor(Colors.Black); 
+                SetBorderColor(Colors.Transparent); 
 
                 //setting timer
                 captureTimer = new System.Timers.Timer();
                 captureTimer.Interval = 1000;
                 captureTimer.Stop();
                 captureTimer.Elapsed += captureTimer_Elapsed;
-
+                if (FolderTo == "")
+                    FolderTo = "c:\\"; 
               
                 Images = new ObservableCollection<string>();
                 PopulateImages();
@@ -166,17 +168,56 @@ namespace FTS.PhotoBooth.ViewModel
 
         #region List of Tumbnails
         public ObservableCollection<string> Images { get; set; }
+
+        private int photoCount;
+
+        public int PhotoCount
+        {
+            get { return photoCount; }
+           private set { photoCount = value; RaisePropertyChanged(() => PhotoCount);  }
+        }
+
+
+        public string PhotoStartName
+        {
+            get
+            {
+
+                return Properties.Settings.Default.PhotoStartName;
+            }
+            set
+            {
+                Properties.Settings.Default.PhotoStartName = value;
+                Properties.Settings.Default.Save();              
+                RaisePropertyChanged(() => FolderTo);
+            }
+        } 
+        
+
         private void PopulateImages()
         {
             currentDispatch.BeginInvoke(DispatcherPriority.Background, new Action(() => Images.Clear()));
 
             DirectoryInfo folder = new DirectoryInfo(FolderTo);
-            var images = folder.GetFiles("*.png").OrderByDescending(fi => fi.LastWriteTime);
+            var images = folder.GetFiles(PhotoStartName+"*.png").OrderByDescending(fi => fi.LastWriteTime);
+            PhotoCount = images.Count(); 
             foreach (FileInfo img in images)
             {
                 currentDispatch.BeginInvoke(DispatcherPriority.Background, new Action(() => Images.Add(img.FullName)));
             }
 
+        }
+
+
+        public RelayCommand<string> OpenImage
+        {
+            get
+            {
+                return new RelayCommand<string>((s) =>
+                {                    
+                    Process.Start(s);
+                }); 
+            }
         }
 
         #endregion
@@ -256,12 +297,12 @@ namespace FTS.PhotoBooth.ViewModel
             if (timer <= 0)
             {
                 captureTimer.Stop();
-                var destFile = FolderTo + '\\' + "Photo" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+                var destFile = FolderTo + '\\' + PhotoStartName + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
                 SetBorderColor(Colors.Green); 
-                Thread.Sleep(1000); 
+                Thread.Sleep(250); 
                 currentSnapshot.Save(destFile, ImageFormat.Png);
                 PopulateImages();
-                SetBorderColor(Colors.Black); 
+                SetBorderColor(Colors.Transparent); 
                 currentDispatch.BeginInvoke(DispatcherPriority.Render, new Action(() => CmdCapture.RaiseCanExecuteChanged()));
             }
         }
@@ -352,6 +393,26 @@ namespace FTS.PhotoBooth.ViewModel
 
             }
         }
+
+
+        public RelayCommand ChooseFolder
+        {
+            get
+            {
+                return
+                     new RelayCommand(() =>
+                    {
+                        var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+                        System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                        if (dialog.SelectedPath != "")
+                            FolderTo = dialog.SelectedPath; 
+
+                    });                     
+
+            }
+        }
+
         #endregion
 
     }

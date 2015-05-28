@@ -46,5 +46,17 @@ namespace FTS.PhotoBooth.Properties {
                 this["InitTimer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("photo-")]
+        public string PhotoStartName {
+            get {
+                return ((string)(this["PhotoStartName"]));
+            }
+            set {
+                this["PhotoStartName"] = value;
+            }
+        }
     }
 }

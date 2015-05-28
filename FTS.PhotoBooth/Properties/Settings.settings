@@ -8,5 +8,8 @@
     <Setting Name="InitTimer" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
+    <Setting Name="PhotoStartName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">photo-</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

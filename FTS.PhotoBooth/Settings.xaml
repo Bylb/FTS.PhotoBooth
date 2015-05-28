@@ -1,20 +1,25 @@
 ﻿<Window x:Class="FTS.PhotoBooth.Settings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Settings" Height="143" Width="393">
-    <Grid  DataContext="{Binding Main, Source={StaticResource Locator}}" >
+        Title="Settings" Height="188" Width="393">
+    <Grid  DataContext="{Binding Main, Source={StaticResource Locator}}"  >
         <Label Content="Camera to use :" Height="25"  Width="91" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" />
 
-        <ComboBox Name="comboBoxCameras"  ItemsSource="{Binding Path=Cameras}"  SelectedItem="{Binding Path=SelectedCamera, Mode=TwoWay}"   IsSynchronizedWithCurrentItem="True"
+        <ComboBox Name="comboBoxCameras"  ItemsSource="{Binding Path=Cameras}"  SelectedItem="{Binding Path=SelectedCamera, Mode=TwoWay}" VerticalAlignment="Top"   IsSynchronizedWithCurrentItem="True"
                   DisplayMemberPath="DisplayName"                                    
-                  Height="25"  Width="254" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="121,5,0,0" >
+                  Height="25"  Width="254"  HorizontalAlignment="Left" Margin="121,5,0,0" >
         </ComboBox>
 
-        <Label Content="Destination Folder :" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,45,0,0"   />
-        <TextBox Name="FoldertoSave" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" Margin="123,47,10,41"  />
-        <TextBox x:Name="FoldertoSave_Copy" Text="{Binding InitTimer, Mode=TwoWay}" Height="25" Margin="122,77,11,11"  />
-        <Label Content="Timer Start" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,75,0,0"   />
+        <Label Content="Destination Folder :" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,43,0,0"   />
+        <TextBox Name="FoldertoSave" Text="{Binding Path=FolderTo, Mode=TwoWay}" Height="25" Margin="123,42,73,0" VerticalAlignment="Top"  />
+        <Button Content="Select..." Command="{Binding Path=ChooseFolder}" Margin="319,43,9,0" VerticalAlignment="Top" Height="26" ></Button>
 
+        <TextBox x:Name="FoldertoSave_Copy" Text="{Binding InitTimer, Mode=TwoWay}" Height="25" Margin="122,77,11,11" VerticalAlignment="Top"   />
+        <Label Content="Timer Start" Height="25"  Width="113" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,75,0,0"    />
+
+
+
+        <Button Content="Close" Click="Button_Click" Height="25" VerticalAlignment="Bottom"  HorizontalAlignment="Right" Margin="0,0,5,5"/>
 
     </Grid>
 </Window>
