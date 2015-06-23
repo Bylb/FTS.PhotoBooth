@@ -15,6 +15,7 @@ using AForge.Video.DirectShow;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Media;
 
 namespace FTS.PhotoBooth.ViewModel
 {
@@ -191,8 +192,8 @@ namespace FTS.PhotoBooth.ViewModel
                 Properties.Settings.Default.Save();              
                 RaisePropertyChanged(() => FolderTo);
             }
-        } 
-        
+        }
+
 
         private void PopulateImages()
         {
@@ -287,6 +288,11 @@ namespace FTS.PhotoBooth.ViewModel
         #endregion
 
 
+        SoundPlayer player = new SoundPlayer(Application.GetResourceStream(new Uri("pack://application:,,,/Media/camera-shutter-click-01.wav")).Stream);
+        private void PlaySound()
+        {
+                player.Play();          
+        }
 
 
         private System.Timers.Timer captureTimer;
@@ -301,6 +307,9 @@ namespace FTS.PhotoBooth.ViewModel
                 SetBorderColor(Colors.Green); 
                 Thread.Sleep(250); 
                 currentSnapshot.Save(destFile, ImageFormat.Png);
+                //Play sound                 
+                PlaySound(); 
+                //repopulate image list
                 PopulateImages();
                 SetBorderColor(Colors.Transparent); 
                 currentDispatch.BeginInvoke(DispatcherPriority.Render, new Action(() => CmdCapture.RaiseCanExecuteChanged()));

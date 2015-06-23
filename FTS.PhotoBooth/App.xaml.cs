@@ -12,5 +12,6 @@ namespace FTS.PhotoBooth
     /// </summary>
     public partial class App : Application
     {
+       
     }
 }
