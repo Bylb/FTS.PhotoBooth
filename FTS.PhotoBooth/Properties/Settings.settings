@@ -11,5 +11,8 @@
     <Setting Name="PhotoStartName" Type="System.String" Scope="User">
       <Value Profile="(Default)">photo-</Value>
     </Setting>
+    <Setting Name="Playsoudn" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

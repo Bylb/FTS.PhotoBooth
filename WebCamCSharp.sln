@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTS.PhotoBooth", "FTS.PhotoBooth\FTS.PhotoBooth.csproj", "{539E5FE6-0592-43D0-B895-2CE8540687D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTS.PhotoBooth.DirectSow", "FTS.PhotoBooth.DirectShow\FTS.PhotoBooth.DirectSow.csproj", "{661EF9F9-3146-49BF-A428-9E81A93E56A4}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupWindows", "SetupWindows\SetupWindows.vdproj", "{989F325C-C301-44BE-AC19-631D4794E1FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,12 @@ Global
 		{661EF9F9-3146-49BF-A428-9E81A93E56A4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{661EF9F9-3146-49BF-A428-9E81A93E56A4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{661EF9F9-3146-49BF-A428-9E81A93E56A4}.Release|Win32.ActiveCfg = Release|Any CPU
+		{989F325C-C301-44BE-AC19-631D4794E1FA}.Debug|Any CPU.ActiveCfg = Debug
+		{989F325C-C301-44BE-AC19-631D4794E1FA}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{989F325C-C301-44BE-AC19-631D4794E1FA}.Debug|Win32.ActiveCfg = Debug
+		{989F325C-C301-44BE-AC19-631D4794E1FA}.Release|Any CPU.ActiveCfg = Release
+		{989F325C-C301-44BE-AC19-631D4794E1FA}.Release|Mixed Platforms.ActiveCfg = Release
+		{989F325C-C301-44BE-AC19-631D4794E1FA}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

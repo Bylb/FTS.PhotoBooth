@@ -287,10 +287,10 @@ namespace FTS.PhotoBooth.ViewModel
 
         #endregion
 
-
         SoundPlayer player = new SoundPlayer(Application.GetResourceStream(new Uri("pack://application:,,,/Media/camera-shutter-click-01.wav")).Stream);
         private void PlaySound()
         {
+            if (PlaySoundOnSnapshot)
                 player.Play();          
         }
 
@@ -368,6 +368,23 @@ namespace FTS.PhotoBooth.ViewModel
                 RaisePropertyChanged(() => FolderTo);
             }
         }
+
+
+        public bool PlaySoundOnSnapshot
+        {
+            get
+            {
+
+                return Properties.Settings.Default.Playsoudn;
+            }
+            set
+            {
+                Properties.Settings.Default.Playsoudn = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged(() => PlaySoundOnSnapshot);
+            }
+        }
+
 
 
         public int InitTimer
