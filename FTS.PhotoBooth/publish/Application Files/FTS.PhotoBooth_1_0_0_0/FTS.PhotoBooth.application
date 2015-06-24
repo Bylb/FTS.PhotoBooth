@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xrml="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <assemblyIdentity name="FTS.PhotoBooth.application" version="1.0.0.0" publicKeyToken="d79929d449a4bd73" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <description asmv2:publisher="COE" asmv2:product="FTS.PhotoBooth" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <deployment install="true" mapFileExtensions="true">
+    <subscription>
+      <update>
+        <beforeApplicationStartup />
+      </update>
+    </subscription>
+    <deploymentProvider codebase="http://www.bechet.eu/PhotoBooth/FTS.PhotoBooth.application" />
+  </deployment>
+  <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
+    <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
+  </compatibleFrameworks>
+  <dependency>
+    <dependentAssembly dependencyType="install" codebase="Application Files\FTS.PhotoBooth_1_0_0_0\FTS.PhotoBooth.exe.manifest" size="13821">
+      <assemblyIdentity name="FTS.PhotoBooth.exe" version="1.0.0.0" publicKeyToken="d79929d449a4bd73" language="neutral" processorArchitecture="msil" type="win32" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>OlZxDIHjW2Xjf4VX48D/CApdrvw=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<publisherIdentity name="CN=DHCOUR\bechet" issuerKeyHash="bcc4fe8e73e7dae2e0b73ca3a2fc9c514fda0b9b" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>Swnq/0j9JOMeUL7z6BidExm5HDk=</DigestValue></Reference></SignedInfo><SignatureValue>zkxCiq61PCGLsjzxJDIy9eBr0IlBnYGSyhFBqg5mkF6b98/+2i/1Puh1L3v+p6LTdMWW1LiYPnA18lJ+ADmUt+MaQeK8j54/ZChCLPvTjd3qwSgn6hWVKgT41y3sl09567T+3U2gbRoVp9L4FLadyv4n1iNkbrKsjhZsrgMmx8U=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>5bcdI1ZvT+aQjQFeZP8V79ux42T1HU4WqxdVlunfBk1YFjYbfCzh9Avg6LcDITvLHk7wTqkbMQ1YOH5ONmHU8b9Thy3fRcvzFUTCewWnmbi1e/SlRIH3rdp6mX6Wm1VIh1uAR8BF99SsTc8zBUcmeVHmW9udNf4kLfnbvRCjh30=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="391cb919139d18e8f3be501ee324fd48ffea094b" Description="" Url=""><as:assemblyIdentity name="FTS.PhotoBooth.application" version="1.0.0.0" publicKeyToken="d79929d449a4bd73" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DHCOUR\bechet</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>NeUJLC2cTu8lENBStLXwMh5e/RU=</DigestValue></Reference></SignedInfo><SignatureValue>VUmBFgeXqN+NOpTy9qOClQOMt8tKChKPXE9DeWyDv6Ml93Bi4pky5gI9A+TGoAhPn62LEbF3uHd2QLp8cVAr8rZVSzsV2J9jH5EOW1Te8r3InTe1CN3mxx0nNxIW/n+TOM6GgV6gKIX9r9PxrEMxq+0JRNudNdgwBEXsQv0iRMY=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>5bcdI1ZvT+aQjQFeZP8V79ux42T1HU4WqxdVlunfBk1YFjYbfCzh9Avg6LcDITvLHk7wTqkbMQ1YOH5ONmHU8b9Thy3fRcvzFUTCewWnmbi1e/SlRIH3rdp6mX6Wm1VIh1uAR8BF99SsTc8zBUcmeVHmW9udNf4kLfnbvRCjh30=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBzTCCATagAwIBAgIQLGTQiGjjtIdG9WC4PF9OcjANBgkqhkiG9w0BAQUFADAlMSMwIQYDVQQDHhoARABIAEMATwBVAFIAXABiAGUAYwBoAGUAdDAeFw0xNTA2MjMxNjAyMDBaFw0xNjA2MjIyMjAyMDBaMCUxIzAhBgNVBAMeGgBEAEgAQwBPAFUAUgBcAGIAZQBjAGgAZQB0MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDltx0jVm9P5pCNAV5k/xXv27HjZPUdTharF1WW6d8GTVgWNht8LOH0C+DotwMhO8seTvBOqRsxDVg4fk42YdTxv1OHLd9Fy/MVRMJ7BaeZuLV79KVEgfet2nqZfpabVUiHW4BHwEX31KxNzzMFRyZ5UeZb2501/iQt+du9EKOHfQIDAQABMA0GCSqGSIb3DQEBBQUAA4GBANYOUO6osxItgTcOLsjpC4psMzUcexOq3cDvJJYShIlA6hzJHnYunJfk3/sWB9I3Uv/+j4ZabNAu9kGyXsChkyCNRR1g8uE/EmytfrU5a2Pl27DF3keWzIWe9AH44/PqkfGdYYivR8ELYUXkvjTHRfZemzR7jxJ87QOD2LramLZ+</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
